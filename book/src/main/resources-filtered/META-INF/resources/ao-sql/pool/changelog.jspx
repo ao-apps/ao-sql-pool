@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ao-sql-pool - Legacy AO JDBC connection pool.
+Copyright (C) 2020  AO Industries, Inc.
+    support@aoindustries.com
+    7262 Bull Pen Cir
+    Mobile, AL 36695
+
+This file is part of ao-sql-pool.
+
+ao-sql-pool is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+ao-sql-pool is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with ao-sql-pool.  If not, see <http://www.gnu.org/licenses />.
+-->
+<jsp:root
+	xmlns:ao="https://aoindustries.com/ao-taglib/"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:changelog="https://semanticcms.com/changelog/taglib/"
+	xmlns:core="https://semanticcms.com/core/taglib/"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	version="2.1"
+>
+	<jsp:directive.page language="java" pageEncoding="UTF-8" />
+	<jsp:directive.page session="false" />
+	<core:page
+		title="@{documented.name} Changelog"
+		shortTitle="Changelog"
+		tocLevels="1"
+		datePublished="2020-11-02T23:14:50-06:00"
+	>
+		<!-- The current snapshot, unreleased version -->
+		<c:set var="version" value="@{com.aoindustries:ao-sql-pool:pom.version}" />
+		<ao:assert
+			test="${!fn:startsWith(version, '@')}"
+			message="Version not substituted: #{version}"
+		/>
+		<c:if test="${fn:endsWith(version, '-SNAPSHOT') and !fn:endsWith(version, '-POST-SNAPSHOT')}">
+			<changelog:release
+				projectName="@{documented.name}"
+				version="#{version}"
+				groupId="@{project.groupId}"
+				artifactId="@{documented.artifactId}"
+				scmUrl="@{project.scm.url}"
+			>
+				<ul>
+					<li>
+						New project split from <core:link book="/aocode-public" page="/index.jspx" /> for legacy AO JDBC
+						connection pool.
+					</li>
+					<li><code>AOConnectionPool</code> improvements:
+						<ol>
+							<li>
+								Now logs <code>SQLWarning</code> before both reset and/or close.
+								Previously, warnings were only logged on reset.
+							</li>
+							<li>
+								Now rolls-back transaction when connection is not auto-commit
+								during both reset and close.  This is done to not rely on underlying JDBC driver
+								implementation specifics, and to always rollback a transaction unless explicitly
+								committed.
+							</li>
+							<li>
+								New static methods <code>defaultLogConnection(Connection, Logger)</code> and
+								<code>defaultResetConnection(Connection)</code>, which can be used to log and reset
+								connections in a compatible way.
+							</li>
+							<li>
+								New constant <code>IDLE_READ_ONLY</code> that defines the read-only state of connections
+								when reset, set to <code>true</code>.  Connections are reset when first created and before
+								being released back to the pool.Previously, various parts of the code would assume reset
+								to read-only - this centralizes that assumption.
+							</li>
+							<li>
+								Deprecated <code>AOPool.releaseConnection(C)</code> in favor of
+								<code>AutoCloseable.close()</code> for use in try-with-resources:
+								<ol>
+									<li>New protected method <code>AOPool.release(C)</code> that performs the release.</li>
+									<li>
+										Every pooled object must now implement <code>AutoCloseable</code> in a way that
+										results in a call to <code>AOPool.release(C)</code> without the underlying 
+										connection closed.
+									</li>
+								</ol>
+							</li>
+							<li>
+								Internally uses the new <core:link book="/ao-sql/tracker" page="/index.jspx" /> project to
+								a close all connection-related resources before returning to the pool.
+							</li>
+							<li>
+								Connections from <code>AOConnectionPool</code> may now be safely shared between threads.
+								When a connection is shared between threads, the <code>maxConnections</code> calculation,
+								along with associated warnings and constraints, is relative to the allocating thread.
+							</li>
+						</ol>
+					</li>
+				</ul>
+			</changelog:release>
+		</c:if>
+	</core:page>
+</jsp:root>
