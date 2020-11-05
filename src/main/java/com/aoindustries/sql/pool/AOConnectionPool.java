@@ -135,6 +135,10 @@ public class AOConnectionPool extends AOPool<Connection,SQLException,SQLExceptio
 	 * If all the connections in the pool are busy and the pool is at capacity, waits until a connection becomes
 	 * available.
 	 * </p>
+	 * <p>
+	 * The connection will be a {@link ConnectionTracker}, which may be unwrapped via {@link Connection#unwrap(java.lang.Class)}.
+	 * The connection tracking is used to close/free all objects before returning the connection to the pool.
+	 * </p>
 	 *
 	 * @return  The read/write connection to the database
 	 *
@@ -161,6 +165,10 @@ public class AOConnectionPool extends AOPool<Connection,SQLException,SQLExceptio
 	 * <p>
 	 * If all the connections in the pool are busy and the pool is at capacity, waits until a connection becomes
 	 * available.
+	 * </p>
+	 * <p>
+	 * The connection will be a {@link ConnectionTracker}, which may be unwrapped via {@link Connection#unwrap(java.lang.Class)}.
+	 * The connection tracking is used to close/free all objects before returning the connection to the pool.
 	 * </p>
 	 *
 	 * @param  maxConnections  The maximum number of connections expected to be used by the current thread.
@@ -198,6 +206,10 @@ public class AOConnectionPool extends AOPool<Connection,SQLException,SQLExceptio
 	 * If all the connections in the pool are busy and the pool is at capacity, waits until a connection becomes
 	 * available.
 	 * </p>
+	 * <p>
+	 * The connection will be a {@link ConnectionTracker}, which may be unwrapped via {@link Connection#unwrap(java.lang.Class)}.
+	 * The connection tracking is used to close/free all objects before returning the connection to the pool.
+	 * </p>
 	 *
 	 * @param  readOnly  The {@link Connection#setReadOnly(boolean) read-only flag}
 	 *
@@ -224,6 +236,10 @@ public class AOConnectionPool extends AOPool<Connection,SQLException,SQLExceptio
 	 * <p>
 	 * If all the connections in the pool are busy and the pool is at capacity, waits until a connection becomes
 	 * available.
+	 * </p>
+	 * <p>
+	 * The connection will be a {@link ConnectionTracker}, which may be unwrapped via {@link Connection#unwrap(java.lang.Class)}.
+	 * The connection tracking is used to close/free all objects before returning the connection to the pool.
 	 * </p>
 	 *
 	 * @param  isolationLevel  The {@link Connection#setTransactionIsolation(int) transaction isolation level}
@@ -252,6 +268,10 @@ public class AOConnectionPool extends AOPool<Connection,SQLException,SQLExceptio
 	 * <p>
 	 * If all the connections in the pool are busy and the pool is at capacity, waits until a connection becomes
 	 * available.
+	 * </p>
+	 * <p>
+	 * The connection will be a {@link ConnectionTracker}, which may be unwrapped via {@link Connection#unwrap(java.lang.Class)}.
+	 * The connection tracking is used to close/free all objects before returning the connection to the pool.
 	 * </p>
 	 *
 	 * @param  isolationLevel  The {@link Connection#setTransactionIsolation(int) transaction isolation level}
