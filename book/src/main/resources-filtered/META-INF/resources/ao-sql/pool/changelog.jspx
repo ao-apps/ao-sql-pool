@@ -37,6 +37,7 @@ along with ao-sql-pool.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2020-11-02T23:14:50-06:00"
+		dateModified="2020-11-27T22:36:15-06:00"
 	>
 		<!-- The current snapshot, unreleased version -->
 		<c:set var="version" value="@{com.aoindustries:ao-sql-pool:pom.version}" />
@@ -77,7 +78,7 @@ along with ao-sql-pool.  If not, see <http://www.gnu.org/licenses />.
 							<li>
 								New constant <code>IDLE_READ_ONLY</code> that defines the read-only state of connections
 								when reset, set to <code>true</code>.  Connections are reset when first created and before
-								being released back to the pool.Previously, various parts of the code would assume reset
+								being released back to the pool.  Previously, various parts of the code would assume reset
 								to read-only - this centralizes that assumption.
 							</li>
 							<li>
