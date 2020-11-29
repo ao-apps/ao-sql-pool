@@ -29,7 +29,7 @@ along with ao-sql-pool.  If not, see <http://www.gnu.org/licenses />.
 		<relativePath>../ao-oss-parent/pom.xml</relativePath>
 	</parent>
 
-	<groupId>com.aoindustries</groupId><artifactId>ao-sql-pool</artifactId><version>1.0.0</version>
+	<groupId>com.aoindustries</groupId><artifactId>ao-sql-pool</artifactId><version>1.0.0-POST-SNAPSHOT</version>
 	<packaging>bundle</packaging>
 
 	<properties>
@@ -47,7 +47,7 @@ along with ao-sql-pool.  If not, see <http://www.gnu.org/licenses />.
 		<connection>scm:git:git://github.com/aoindustries/ao-sql-pool.git</connection>
 		<developerConnection>scm:git:git@github.com:aoindustries/ao-sql-pool.git</developerConnection>
 		<url>https://github.com/aoindustries/ao-sql-pool</url>
-		<tag>ao-sql-pool-1.0.0</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<issueManagement>
