@@ -490,8 +490,6 @@ public class AOConnectionPool extends AOPool<Connection,SQLException,SQLExceptio
 	}
 
 	/**
-	 * {@inheritDoc}
-	 *
 	 * @see  #defaultLogConnection(java.sql.Connection, java.util.logging.Logger)
 	 */
 	@Override
@@ -534,8 +532,6 @@ public class AOConnectionPool extends AOPool<Connection,SQLException,SQLExceptio
 	}
 
 	/**
-	 * {@inheritDoc}
-	 *
 	 * @see  #defaultResetConnection(java.sql.Connection)
 	 */
 	@Override
