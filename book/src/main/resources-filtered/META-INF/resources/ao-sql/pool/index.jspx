@@ -35,15 +35,16 @@ along with ao-sql-pool.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="@{documented.shortTitle}"
 		description="@{documented.description}"
 		datePublished="2020-11-02T23:14:50-06:00"
+		dateModified="2020-11-29T01:46:51-06:00"
 	>
 		<core:child page="changelog.jspx" />
 		<core:child page="apidocs/index.jspx" />
 		<header>
 			<ao:include
 				page="/ao-badges/badges.inc.jspx"
-				arg.projectStatus="alpha"
-				arg.managementStatus="preview"
-				arg.packagingStatus="developmental"
+				arg.projectStatus="current-stable"
+				arg.managementStatus="production"
+				arg.packagingStatus="active"
 				arg.javaseVersion="@{documented.javase.version}"
 				arg.semanticVersioning="2.0.0"
 				arg.license="lgpl-3.0"
