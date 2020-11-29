@@ -47,18 +47,18 @@ import java.util.logging.Logger;
  * @author  AO Industries, Inc.
  */
 // TODO: Use Connection.isValid while allocating from pool and/or putting back into pool?
-// TODO: Can isValid be used instead of forceful rollbackAndClose on SQLException?
 // TODO: Or use isValid in background connection management?
+// TODO: Or, when a connection is checked back in with an unresolved fail-fast state (not current used by pool), then
+//       background validate all connections?
 //
 // TODO: Warn in AOConnectionPool when max connections are higher than database supports (check once on connect, check
 //       occasionally?  PostgreSQL JDBC driver seems to have hard-coded value of 8192 currently, so this might not be
 //       very meaningful.
 //
 // TODO: Implement DataSource and ConnectionPoolDataSource, if want to further develop this, but we should probably
-//       kill this in favor of one of several other pooling options.
-//
-// TODO: Deprecate and just use commons-dbcp.  This pooling code predates dbcp-1.0 by around three years, but there
-//       is probably no benefit to maintaining this separate pooling implementation.
+//       kill this in favor of one of several other pooling options.  Deprecate and just use commons-dbcp.  This pooling
+//       code predates dbcp-1.0 by around three years, but there is probably no benefit to maintaining this separate
+//       pooling implementation.
 public class AOConnectionPool extends AOPool<Connection,SQLException,SQLException> {
 
 	/**
