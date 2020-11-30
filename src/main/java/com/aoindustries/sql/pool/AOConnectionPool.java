@@ -483,10 +483,8 @@ public class AOConnectionPool extends AOPool<Connection,SQLException,SQLExceptio
 	 * @see  #logConnection(java.sql.Connection)
 	 */
 	public static void defaultLogConnection(Connection conn, Logger logger) throws SQLException {
-		if(logger.isLoggable(Level.WARNING)) {
-			SQLWarning warning = conn.getWarnings();
-			if(warning != null) logger.log(Level.WARNING, null, warning);
-		}
+		SQLWarning warning = conn.getWarnings();
+		if(warning != null) logger.log(Level.WARNING, null, warning);
 	}
 
 	/**
