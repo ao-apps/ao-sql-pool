@@ -1,6 +1,6 @@
 /*
  * ao-sql-pool - Legacy AO JDBC connection pool.
- * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2015, 2016, 2018, 2019, 2020  AO Industries, Inc.
+ * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2015, 2016, 2018, 2019, 2020, 2021  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -59,7 +59,7 @@ import java.util.logging.Logger;
 //       kill this in favor of one of several other pooling options.  Deprecate and just use commons-dbcp.  This pooling
 //       code predates dbcp-1.0 by around three years, but there is probably no benefit to maintaining this separate
 //       pooling implementation.
-public class AOConnectionPool extends AOPool<Connection,SQLException,SQLException> {
+public class AOConnectionPool extends AOPool<Connection, SQLException, SQLException> {
 
 	/**
 	 * The read-only state of connections while idle in the pool.
@@ -316,7 +316,7 @@ public class AOConnectionPool extends AOPool<Connection,SQLException,SQLExceptio
 		}
 	}
 
-	private static final ConcurrentMap<String,Object> driversLoaded = new ConcurrentHashMap<>();
+	private static final ConcurrentMap<String, Object> driversLoaded = new ConcurrentHashMap<>();
 
 	/**
 	 * Loads a driver at most once.
