@@ -20,15 +20,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with ao-sql-pool.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.aoindustries.sql.pool;
+package com.aoapps.sql.pool;
 
-import com.aoindustries.io.AOPool;
-import com.aoindustries.lang.AutoCloseables;
-import com.aoindustries.lang.Throwables;
-import com.aoindustries.sql.Connections;
-import com.aoindustries.sql.tracker.ConnectionTracker;
-import com.aoindustries.sql.tracker.ConnectionTrackerImpl;
-import com.aoindustries.sql.tracker.DatabaseMetaDataTrackerImpl;
+import com.aoapps.hodgepodge.io.AOPool;
+import com.aoapps.lang.AutoCloseables;
+import com.aoapps.lang.Throwables;
+import com.aoapps.sql.Connections;
+import com.aoapps.sql.tracker.ConnectionTracker;
+import com.aoapps.sql.tracker.ConnectionTrackerImpl;
+import com.aoapps.sql.tracker.DatabaseMetaDataTrackerImpl;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -461,13 +461,13 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
 				+ "  </thead>\n");
 		super.printConnectionStats(out, isXhtml);
 		out.append("    <tr><td>Driver:</td><td>");
-		com.aoindustries.util.EncodingUtils.encodeHtml(driver, false, false, out, isXhtml);
+		com.aoapps.hodgepodge.util.EncodingUtils.encodeHtml(driver, false, false, out, isXhtml);
 		out.append("</td></tr>\n"
 				+ "    <tr><td>URL:</td><td>");
-		com.aoindustries.util.EncodingUtils.encodeHtml(url, false, false, out, isXhtml);
+		com.aoapps.hodgepodge.util.EncodingUtils.encodeHtml(url, false, false, out, isXhtml);
 		out.append("</td></tr>\n"
 				+ "    <tr><td>User:</td><td>");
-		com.aoindustries.util.EncodingUtils.encodeHtml(user, false, false, out, isXhtml);
+		com.aoapps.hodgepodge.util.EncodingUtils.encodeHtml(user, false, false, out, isXhtml);
 		out.append("</td></tr>\n"
 				+ "    <tr><td>Password:</td><td>");
 		int len=password.length();

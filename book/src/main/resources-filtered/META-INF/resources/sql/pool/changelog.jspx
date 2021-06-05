@@ -37,7 +37,7 @@ along with ao-sql-pool.  If not, see <http://www.gnu.org/licenses />.
 		shortTitle="Changelog"
 		tocLevels="1"
 		datePublished="2020-11-02T23:14:50-06:00"
-		dateModified="2021-05-31T01:04:26-05:00"
+		dateModified="2021-06-03T22:53:21-05:00"
 	>
 		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
 			<changelog:release
@@ -50,6 +50,7 @@ along with ao-sql-pool.  If not, see <http://www.gnu.org/licenses />.
 			>
 				<ul>
 					<li>Maven artifact relocated from <code>com.aoindustries:ao-sql-pool</code> to <code>com.aoapps:ao-sql-pool</code>.</li>
+					<li>Package renamed from <code>com.aoindustries.sql.pool</code> to <code>com.aoapps.sql.pool</code>.</li>
 				</ul>
 			</changelog:release>
 		</c:if>
