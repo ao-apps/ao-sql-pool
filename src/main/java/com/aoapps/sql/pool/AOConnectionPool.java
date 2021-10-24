@@ -323,8 +323,8 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
 	 */
 	private static void loadDriver(String classname) throws ClassNotFoundException {
 		if(!driversLoaded.containsKey(classname)) {
-			Object O = Class.forName(classname);
-			driversLoaded.putIfAbsent(classname, O);
+			Class<?> driver = Class.forName(classname);
+			driversLoaded.putIfAbsent(classname, driver);
 		}
 	}
 
