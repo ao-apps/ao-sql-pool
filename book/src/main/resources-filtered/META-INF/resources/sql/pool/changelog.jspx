@@ -108,7 +108,7 @@ along with ao-sql-pool.  If not, see <http://www.gnu.org/licenses />.
 								<li>New protected method <code>AOPool.release(C)</code> that performs the release.</li>
 								<li>
 									Every pooled object must now implement <code>AutoCloseable</code> in a way that
-									results in a call to <code>AOPool.release(C)</code> without the underlying 
+									results in a call to <code>AOPool.release(C)</code> without the underlying
 									connection closed.
 								</li>
 							</ol>
