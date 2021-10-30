@@ -423,12 +423,12 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
 	@SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
 	protected Connection getConnectionObject() throws SQLException {
 		try {
-			if(Thread.interrupted()) throw new SQLException("Thread interrupted");
+			if(Thread.currentThread().isInterrupted()) throw new SQLException("Thread interrupted");
 			loadDriver(driver);
 			Connection conn = DriverManager.getConnection(url, user, password);
 			boolean successful = false;
 			try {
-				if(Thread.interrupted()) throw new SQLException("Thread interrupted"); // TODO: Make an InterruptedSQLException, with a static checkInterrupted() method?
+				if(Thread.currentThread().isInterrupted()) throw new SQLException("Thread interrupted"); // TODO: Make an InterruptedSQLException, with a static checkInterrupted() method?
 				if(conn.getClass().getName().startsWith("org.postgresql.")) {
 					// getTransactionIsolation causes a round-trip to the database, this wrapper caches the value and avoids unnecessary sets
 					// to eliminate unnecessary round-trips and improve performance over high-latency links.
@@ -508,23 +508,23 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
 	 * @see  #resetConnection(java.sql.Connection)
 	 */
 	public static void defaultResetConnection(Connection conn) throws SQLException {
-		if(Thread.interrupted()) throw new SQLException("Thread interrupted");
+		if(Thread.currentThread().isInterrupted()) throw new SQLException("Thread interrupted");
 		conn.clearWarnings();
 
 		// Autocommit will always be turned on, regardless what a previous transaction might have done
 		if(!conn.getAutoCommit()) {
-			if(Thread.interrupted()) throw new SQLException("Thread interrupted");
+			if(Thread.currentThread().isInterrupted()) throw new SQLException("Thread interrupted");
 			conn.rollback();
 			conn.setAutoCommit(true);
 		}
 		// Restore the connection to the idle read-only state
 		if(conn.isReadOnly() != IDLE_READ_ONLY) {
-			if(Thread.interrupted()) throw new SQLException("Thread interrupted");
+			if(Thread.currentThread().isInterrupted()) throw new SQLException("Thread interrupted");
 			conn.setReadOnly(IDLE_READ_ONLY);
 		}
 		// Restore to default transaction level
 		if(conn.getTransactionIsolation() != Connections.DEFAULT_TRANSACTION_ISOLATION) {
-			if(Thread.interrupted()) throw new SQLException("Thread interrupted"); // TODO: Should we do these types of interrupted checks more?
+			if(Thread.currentThread().isInterrupted()) throw new SQLException("Thread interrupted"); // TODO: Should we do these types of interrupted checks more?
 			conn.setTransactionIsolation(Connections.DEFAULT_TRANSACTION_ISOLATION);
 		}
 	}
@@ -557,11 +557,13 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
 
 	@Override
 	protected SQLException newInterruptedException(String message, Throwable cause) {
+		// Restore the interrupted status
+		Thread.currentThread().interrupt();
 		return newException(message, cause);
 	}
 
 	@Override
 	public String toString() {
-		return "AOConnectionPool(url=\""+url+"\", user=\""+user+"\")";
+		return "AOConnectionPool(url=\"" + url + "\", user=\"" + user + "\")";
 	}
 }
