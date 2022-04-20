@@ -1,2 +1,6 @@
 # Significant manual code formatting clean-up…
 d24200f09532a1d69aaa2db5ca9b3f434e4d8505
+# Removed trailing whitespace
+f9910715d1617ac0b8f7a2ab013baae4975cf4b4
+# Generics whitespace consistency
+f07c044575042ec0b102d152f13b748c9a27918d
