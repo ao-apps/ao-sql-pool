@@ -22,122 +22,122 @@ You should have received a copy of the GNU Lesser General Public License
 along with ao-sql-pool.  If not, see <https://www.gnu.org/licenses/>.
 -->
 <jsp:root
-	xmlns:ao="https://oss.aoapps.com/taglib/"
-	xmlns:c="http://java.sun.com/jsp/jstl/core"
-	xmlns:changelog="https://semanticcms.com/changelog/taglib/"
-	xmlns:core="https://semanticcms.com/core/taglib/"
-	xmlns:fn="http://java.sun.com/jsp/jstl/functions"
-	xmlns:jsp="http://java.sun.com/JSP/Page"
-	version="2.1"
+  xmlns:ao="https://oss.aoapps.com/taglib/"
+  xmlns:c="http://java.sun.com/jsp/jstl/core"
+  xmlns:changelog="https://semanticcms.com/changelog/taglib/"
+  xmlns:core="https://semanticcms.com/core/taglib/"
+  xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+  xmlns:jsp="http://java.sun.com/JSP/Page"
+  version="2.1"
 >
-	<jsp:directive.page language="java" pageEncoding="UTF-8" />
-	<jsp:directive.page session="false" />
-	<core:page
-		title="@{documented.name} Changelog"
-		shortTitle="Changelog"
-		tocLevels="1"
-		datePublished="2020-11-02T23:14:50-06:00"
-		dateModified="2022-02-16T01:15:21-06:00"
-	>
-		<c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
-			<changelog:release
-				projectName="@{documented.name}"
-				version="@{project.version}"
-				groupId="@{project.groupId}"
-				artifactId="@{documented.artifactId}"
-				repository="@{nexusUrl}content/repositories/snapshots/"
-				scmUrl="@{project.scm.url}"
-			/>
-		</c:if>
+  <jsp:directive.page language="java" pageEncoding="UTF-8" />
+  <jsp:directive.page session="false" />
+  <core:page
+    title="@{documented.name} Changelog"
+    shortTitle="Changelog"
+    tocLevels="1"
+    datePublished="2020-11-02T23:14:50-06:00"
+    dateModified="2022-02-16T01:15:21-06:00"
+  >
+    <c:if test="${fn:endsWith('@{project.version}', '-SNAPSHOT') and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')}">
+      <changelog:release
+        projectName="@{documented.name}"
+        version="@{project.version}"
+        groupId="@{project.groupId}"
+        artifactId="@{documented.artifactId}"
+        repository="@{nexusUrl}content/repositories/snapshots/"
+        scmUrl="@{project.scm.url}"
+      />
+    </c:if>
 
-		<changelog:release
-			projectName="@{documented.name}"
-			version="2.0.1"
-			datePublished="2022-02-16T01:15:21-06:00"
-			groupId="@{project.groupId}"
-			artifactId="@{documented.artifactId}"
-			scmUrl="@{project.scm.url}"
-		>
-			<ul>
-				<li>Now properly restoring Thread interrupted state on <code>InterruptedException</code>.</li>
-			</ul>
-		</changelog:release>
+    <changelog:release
+      projectName="@{documented.name}"
+      version="2.0.1"
+      datePublished="2022-02-16T01:15:21-06:00"
+      groupId="@{project.groupId}"
+      artifactId="@{documented.artifactId}"
+      scmUrl="@{project.scm.url}"
+    >
+      <ul>
+        <li>Now properly restoring Thread interrupted state on <code>InterruptedException</code>.</li>
+      </ul>
+    </changelog:release>
 
-		<changelog:release
-			projectName="@{documented.name}"
-			version="2.0.0"
-			datePublished="2021-07-20T00:55:49-05:00"
-			groupId="@{project.groupId}"
-			artifactId="@{documented.artifactId}"
-			scmUrl="@{project.scm.url}"
-		>
-			<ul>
-				<li>Now supports Java 9+ modules with included <code>module-info.class</code>.</li>
-				<li>Maven artifact relocated from <code>com.aoindustries:ao-sql-pool</code> to <code>com.aoapps:ao-sql-pool</code>.</li>
-				<li>Package renamed from <code>com.aoindustries.sql.pool</code> to <code>com.aoapps.sql.pool</code>.</li>
-			</ul>
-		</changelog:release>
+    <changelog:release
+      projectName="@{documented.name}"
+      version="2.0.0"
+      datePublished="2021-07-20T00:55:49-05:00"
+      groupId="@{project.groupId}"
+      artifactId="@{documented.artifactId}"
+      scmUrl="@{project.scm.url}"
+    >
+      <ul>
+        <li>Now supports Java 9+ modules with included <code>module-info.class</code>.</li>
+        <li>Maven artifact relocated from <code>com.aoindustries:ao-sql-pool</code> to <code>com.aoapps:ao-sql-pool</code>.</li>
+        <li>Package renamed from <code>com.aoindustries.sql.pool</code> to <code>com.aoapps.sql.pool</code>.</li>
+      </ul>
+    </changelog:release>
 
-		<changelog:release
-			projectName="@{documented.name}"
-			version="1.0.0"
-			datePublished="2020-11-29T01:50:51-06:00"
-			groupId="com.aoindustries"
-			artifactId="@{documented.artifactId}"
-			scmUrl="@{project.scm.url}"
-		>
-			<ul>
-				<li>
-					New project split from <core:link book="/hodgepodge" page="/index.jspx" /> for legacy AO JDBC
-					connection pool.
-				</li>
-				<li><code>AOConnectionPool</code> improvements:
-					<ol>
-						<li>
-							Now logs <code>SQLWarning</code> before both reset and/or close.
-							Previously, warnings were only logged on reset.
-						</li>
-						<li>
-							Now rolls-back transaction when connection is not auto-commit
-							during both reset and close.  This is done to not rely on underlying JDBC driver
-							implementation specifics, and to always rollback a transaction unless explicitly
-							committed.
-						</li>
-						<li>
-							New static methods <code>defaultLogConnection(Connection, Logger)</code> and
-							<code>defaultResetConnection(Connection)</code>, which can be used to log and reset
-							connections in a compatible way.
-						</li>
-						<li>
-							New constant <code>IDLE_READ_ONLY</code> that defines the read-only state of connections
-							when reset, set to <code>true</code>.  Connections are reset when first created and before
-							being released back to the pool.  Previously, various parts of the code would assume reset
-							to read-only - this centralizes that assumption.
-						</li>
-						<li>
-							Deprecated <code>AOPool.releaseConnection(C)</code> in favor of
-							<code>AutoCloseable.close()</code> for use in try-with-resources:
-							<ol>
-								<li>New protected method <code>AOPool.release(C)</code> that performs the release.</li>
-								<li>
-									Every pooled object must now implement <code>AutoCloseable</code> in a way that
-									results in a call to <code>AOPool.release(C)</code> without the underlying
-									connection closed.
-								</li>
-							</ol>
-						</li>
-						<li>
-							Internally uses the new <core:link book="/sql/tracker" page="/index.jspx" /> project to
-							a close all connection-related resources before returning to the pool.
-						</li>
-						<li>
-							Connections from <code>AOConnectionPool</code> may now be safely shared between threads.
-							When a connection is shared between threads, the <code>maxConnections</code> calculation,
-							along with associated warnings and constraints, is relative to the allocating thread.
-						</li>
-					</ol>
-				</li>
-			</ul>
-		</changelog:release>
-	</core:page>
+    <changelog:release
+      projectName="@{documented.name}"
+      version="1.0.0"
+      datePublished="2020-11-29T01:50:51-06:00"
+      groupId="com.aoindustries"
+      artifactId="@{documented.artifactId}"
+      scmUrl="@{project.scm.url}"
+    >
+      <ul>
+        <li>
+          New project split from <core:link book="/hodgepodge" page="/index.jspx" /> for legacy AO JDBC
+          connection pool.
+        </li>
+        <li><code>AOConnectionPool</code> improvements:
+          <ol>
+            <li>
+              Now logs <code>SQLWarning</code> before both reset and/or close.
+              Previously, warnings were only logged on reset.
+            </li>
+            <li>
+              Now rolls-back transaction when connection is not auto-commit
+              during both reset and close.  This is done to not rely on underlying JDBC driver
+              implementation specifics, and to always rollback a transaction unless explicitly
+              committed.
+            </li>
+            <li>
+              New static methods <code>defaultLogConnection(Connection, Logger)</code> and
+              <code>defaultResetConnection(Connection)</code>, which can be used to log and reset
+              connections in a compatible way.
+            </li>
+            <li>
+              New constant <code>IDLE_READ_ONLY</code> that defines the read-only state of connections
+              when reset, set to <code>true</code>.  Connections are reset when first created and before
+              being released back to the pool.  Previously, various parts of the code would assume reset
+              to read-only - this centralizes that assumption.
+            </li>
+            <li>
+              Deprecated <code>AOPool.releaseConnection(C)</code> in favor of
+              <code>AutoCloseable.close()</code> for use in try-with-resources:
+              <ol>
+                <li>New protected method <code>AOPool.release(C)</code> that performs the release.</li>
+                <li>
+                  Every pooled object must now implement <code>AutoCloseable</code> in a way that
+                  results in a call to <code>AOPool.release(C)</code> without the underlying
+                  connection closed.
+                </li>
+              </ol>
+            </li>
+            <li>
+              Internally uses the new <core:link book="/sql/tracker" page="/index.jspx" /> project to
+              a close all connection-related resources before returning to the pool.
+            </li>
+            <li>
+              Connections from <code>AOConnectionPool</code> may now be safely shared between threads.
+              When a connection is shared between threads, the <code>maxConnections</code> calculation,
+              along with associated warnings and constraints, is relative to the allocating thread.
+            </li>
+          </ol>
+        </li>
+      </ul>
+    </changelog:release>
+  </core:page>
 </jsp:root>

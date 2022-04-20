@@ -37,38 +37,38 @@ import java.sql.SQLException;
 // TODO: Cache many other methods, too?
 public class PostgresqlConnectionWrapper extends ConnectionWrapperImpl {
 
-	private final Object transactionIsolationLevelLock = new Object();
-	private int transactionIsolationLevel;
+  private final Object transactionIsolationLevelLock = new Object();
+  private int transactionIsolationLevel;
 
-	PostgresqlConnectionWrapper(Connection conn) throws SQLException {
-		super(conn);
-		this.transactionIsolationLevel = conn.getTransactionIsolation();
-	}
+  PostgresqlConnectionWrapper(Connection conn) throws SQLException {
+    super(conn);
+    this.transactionIsolationLevel = conn.getTransactionIsolation();
+  }
 
-	@Override
-	public void setTransactionIsolation(int level) throws SQLException {
-		Connection wrapped = getWrapped();
-		synchronized(transactionIsolationLevelLock) {
-			if(
-				level != this.transactionIsolationLevel
-				// Also call wrapped connection when isClosed to get the error from the wrapped driver.
-				|| wrapped.isClosed()
-			) {
-				wrapped.setTransactionIsolation(level);
-				this.transactionIsolationLevel = level;
-			}
-		}
-	}
+  @Override
+  public void setTransactionIsolation(int level) throws SQLException {
+    Connection wrapped = getWrapped();
+    synchronized (transactionIsolationLevelLock) {
+      if (
+        level != this.transactionIsolationLevel
+        // Also call wrapped connection when isClosed to get the error from the wrapped driver.
+        || wrapped.isClosed()
+      ) {
+        wrapped.setTransactionIsolation(level);
+        this.transactionIsolationLevel = level;
+      }
+    }
+  }
 
-	@Override
-	public int getTransactionIsolation() throws SQLException {
-		Connection wrapped = getWrapped();
-		synchronized(transactionIsolationLevelLock) {
-			// Also call wrapped connection when isClosed to get the error from the wrapped driver.
-			if(wrapped.isClosed()) {
-				transactionIsolationLevel = wrapped.getTransactionIsolation();
-			}
-			return transactionIsolationLevel;
-		}
-	}
+  @Override
+  public int getTransactionIsolation() throws SQLException {
+    Connection wrapped = getWrapped();
+    synchronized (transactionIsolationLevelLock) {
+      // Also call wrapped connection when isClosed to get the error from the wrapped driver.
+      if (wrapped.isClosed()) {
+        transactionIsolationLevel = wrapped.getTransactionIsolation();
+      }
+      return transactionIsolationLevel;
+    }
+  }
 }
