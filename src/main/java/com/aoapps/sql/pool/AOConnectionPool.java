@@ -73,7 +73,7 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
   private final String password;
 
   public AOConnectionPool(String driver, String url, String user, String password, int numConnections, long maxConnectionAge, Logger logger) {
-    super(AOConnectionPool.class.getName()+"?url=" + url+"&user="+user, numConnections, maxConnectionAge, logger);
+    super(AOConnectionPool.class.getName() + "?url=" + url + "&user=" + user, numConnections, maxConnectionAge, logger);
     this.driver = driver;
     this.url = url;
     this.user = user;
@@ -84,7 +84,7 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
   private Connection unwrap(Connection conn) throws SQLException {
     IPooledConnection wrapper;
     if (conn instanceof IPooledConnection) {
-      wrapper = (IPooledConnection)conn;
+      wrapper = (IPooledConnection) conn;
     } else {
       wrapper = conn.unwrap(IPooledConnection.class);
     }
@@ -341,7 +341,7 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
 
     @Override
     protected PooledConnection getConnectionWrapper() {
-      return (PooledConnection)super.getConnectionWrapper();
+      return (PooledConnection) super.getConnectionWrapper();
     }
 
     @Override
@@ -357,8 +357,8 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
           // Warn and constrain by maxConnections
           if (pool.logger.isLoggable(Level.WARNING)) {
             pool.logger.warning(
-              "AOConnectionPool.poolSize > DatabaseMetaData.maxConnections: "
-              + poolSize + " > " + maxConnections
+                "AOConnectionPool.poolSize > DatabaseMetaData.maxConnections: "
+                    + poolSize + " > " + maxConnections
             );
           }
           return maxConnections;
@@ -454,7 +454,7 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
     } catch (ThreadDeath td) {
       throw td;
     } catch (Throwable t) {
-      logger.logp(Level.SEVERE, AOConnectionPool.class.getName(), "getConnectionObject", "url="+url+"&user="+user+"&password=XXXXXXXX", t);
+      logger.logp(Level.SEVERE, AOConnectionPool.class.getName(), "getConnectionObject", "url=" + url + "&user=" + user + "&password=XXXXXXXX", t);
       throw Throwables.wrap(t, SQLException.class, SQLException::new);
     }
   }
@@ -481,8 +481,8 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
     com.aoapps.hodgepodge.util.EncodingUtils.encodeHtml(user, false, false, out, isXhtml);
     out.append("</td></tr>\n"
         + "    <tr><td>Password:</td><td>");
-    int len=password.length();
-    for (int c=0;c<len;c++) {
+    int len = password.length();
+    for (int c = 0; c < len; c++) {
       out.append('*');
     }
     out.append("</td></tr>\n");
@@ -561,7 +561,7 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
   @Override
   protected SQLException newException(String message, Throwable cause) {
     if (cause instanceof SQLException) {
-      return (SQLException)cause;
+      return (SQLException) cause;
     }
     if (message == null) {
       if (cause == null) {
