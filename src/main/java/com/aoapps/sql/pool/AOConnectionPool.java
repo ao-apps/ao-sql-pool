@@ -72,6 +72,9 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
   private final String user;
   private final String password;
 
+  /**
+   * Creates a new pool.
+   */
   public AOConnectionPool(String driver, String url, String user, String password, int numConnections, long maxConnectionAge, Logger logger) {
     super(AOConnectionPool.class.getName() + "?url=" + url + "&user=" + user, numConnections, maxConnectionAge, logger);
     this.driver = driver;
@@ -82,11 +85,11 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
 
   @SuppressWarnings("null")
   private Connection unwrap(Connection conn) throws SQLException {
-    IPooledConnection wrapper;
-    if (conn instanceof IPooledConnection) {
-      wrapper = (IPooledConnection) conn;
+    PooledConnection wrapper;
+    if (conn instanceof PooledConnection) {
+      wrapper = (PooledConnection) conn;
     } else {
-      wrapper = conn.unwrap(IPooledConnection.class);
+      wrapper = conn.unwrap(PooledConnection.class);
     }
     if (wrapper.getPool() == this) {
       return wrapper.getWrapped();
@@ -335,13 +338,13 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
 
   private static class PooledDatabaseMetaData extends DatabaseMetaDataTrackerImpl {
 
-    private PooledDatabaseMetaData(PooledConnection pooledConnection, DatabaseMetaData wrapped) {
+    private PooledDatabaseMetaData(PooledConnectionImpl pooledConnection, DatabaseMetaData wrapped) {
       super(pooledConnection, wrapped);
     }
 
     @Override
-    protected PooledConnection getConnectionWrapper() {
-      return (PooledConnection) super.getConnectionWrapper();
+    protected PooledConnectionImpl getConnectionWrapper() {
+      return (PooledConnectionImpl) super.getConnectionWrapper();
     }
 
     @Override
@@ -370,15 +373,15 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
     }
   }
 
-  private static interface IPooledConnection extends ConnectionTracker {
+  private static interface PooledConnection extends ConnectionTracker {
     AOConnectionPool getPool();
   }
 
-  private static class PooledConnection extends ConnectionTrackerImpl implements IPooledConnection {
+  private static class PooledConnectionImpl extends ConnectionTrackerImpl implements PooledConnection {
 
     private final AOConnectionPool pool;
 
-    private PooledConnection(AOConnectionPool pool, Connection wrapped) {
+    private PooledConnectionImpl(AOConnectionPool pool, Connection wrapped) {
       super(wrapped);
       this.pool = pool;
     }
@@ -443,7 +446,7 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
           // to eliminate unnecessary round-trips and improve performance over high-latency links.
           conn = new PostgresqlConnectionWrapper(conn);
         }
-        PooledConnection pooledConnection = new PooledConnection(this, conn);
+        PooledConnectionImpl pooledConnection = new PooledConnectionImpl(this, conn);
         successful = true;
         return pooledConnection;
       } finally {
@@ -489,7 +492,7 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
   }
 
   /**
-   * Default implementation of {@link #logConnection(java.sql.Connection)}
+   * Default implementation of {@link #logConnection(java.sql.Connection)}.
    *
    * @see  #logConnection(java.sql.Connection)
    */
@@ -501,6 +504,8 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
   }
 
   /**
+   * {@inheritDoc}
+   *
    * @see  #defaultLogConnection(java.sql.Connection, java.util.logging.Logger)
    */
   @Override
@@ -509,7 +514,7 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
   }
 
   /**
-   * Default implementation of {@link #resetConnection(java.sql.Connection)}
+   * Default implementation of {@link #resetConnection(java.sql.Connection)}.
    * <ol>
    * <li>{@linkplain Connection#clearWarnings() Warnings are cleared}</li>
    * <li>Any {@linkplain Connection#getAutoCommit() transaction in-progress} is {@linkplain Connection#rollback() rolled-back}</li>
@@ -551,6 +556,8 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
   }
 
   /**
+   * {@inheritDoc}
+   *
    * @see  #defaultResetConnection(java.sql.Connection)
    */
   @Override
