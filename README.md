@@ -22,7 +22,7 @@ Legacy AO JDBC connection pool.
 * [Project Home](https://oss.aoapps.com/sql/pool/)
 * [Changelog](https://oss.aoapps.com/sql/pool/changelog)
 * [API Docs](https://oss.aoapps.com/sql/pool/apidocs/)
-* [Maven Central Repository](https://search.maven.org/artifact/com.aoapps/ao-sql-pool)
+* [Maven Central Repository](https://central.sonatype.com/search?namespace=com.aoapps&q=a%3Aao-sql-pool)
 * [GitHub](https://github.com/ao-apps/ao-sql-pool)
 
 ## Contact Us
