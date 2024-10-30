@@ -1,6 +1,6 @@
 /*
  * ao-sql-pool - Legacy AO JDBC connection pool.
- * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2015, 2016, 2018, 2019, 2020, 2021, 2022  AO Industries, Inc.
+ * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2015, 2016, 2018, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -100,11 +100,10 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
 
   /**
    * {@inheritDoc}
-   * <p>
-   * If the connection not already {@linkplain Connection#isClosed() closed}, and is not
+   *
+   * <p>If the connection not already {@linkplain Connection#isClosed() closed}, and is not
    * {@linkplain Connection#getAutoCommit() auto-commit}, the connection will be
-   * {@linkplain Connection#rollback() rolled back} and set back to auto-commit before closing.
-   * </p>
+   * {@linkplain Connection#rollback() rolled back} and set back to auto-commit before closing.</p>
    */
   @Override
   @SuppressWarnings({"UseSpecificCatch", "TooBroadCatch"})
@@ -132,17 +131,14 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
    * Gets a read/write connection to the database with a transaction level of
    * {@link Connections#DEFAULT_TRANSACTION_ISOLATION},
    * warning when a connection is already used by this thread.
-   * <p>
-   * The connection will be in auto-commit mode, as configured by {@link #resetConnection(java.sql.Connection)}
-   * </p>
-   * <p>
-   * If all the connections in the pool are busy and the pool is at capacity, waits until a connection becomes
-   * available.
-   * </p>
-   * <p>
-   * The connection will be a {@link ConnectionTracker}, which may be unwrapped via {@link Connection#unwrap(java.lang.Class)}.
-   * The connection tracking is used to close/free all objects before returning the connection to the pool.
-   * </p>
+   *
+   * <p>The connection will be in auto-commit mode, as configured by {@link #resetConnection(java.sql.Connection)}</p>
+   *
+   * <p>If all the connections in the pool are busy and the pool is at capacity, waits until a connection becomes
+   * available.</p>
+   *
+   * <p>The connection will be a {@link ConnectionTracker}, which may be unwrapped via {@link Connection#unwrap(java.lang.Class)}.
+   * The connection tracking is used to close/free all objects before returning the connection to the pool.</p>
    *
    * @return  The read/write connection to the database
    *
@@ -163,25 +159,21 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
   /**
    * Gets a read/write connection to the database with a transaction level of
    * {@link Connections#DEFAULT_TRANSACTION_ISOLATION}.
-   * <p>
-   * The connection will be in auto-commit mode, as configured by {@link #resetConnection(java.sql.Connection)}
-   * </p>
-   * <p>
-   * If all the connections in the pool are busy and the pool is at capacity, waits until a connection becomes
-   * available.
-   * </p>
-   * <p>
-   * The connection will be a {@link ConnectionTracker}, which may be unwrapped via {@link Connection#unwrap(java.lang.Class)}.
-   * The connection tracking is used to close/free all objects before returning the connection to the pool.
-   * </p>
+   *
+   * <p>The connection will be in auto-commit mode, as configured by {@link #resetConnection(java.sql.Connection)}</p>
+   *
+   * <p>If all the connections in the pool are busy and the pool is at capacity, waits until a connection becomes
+   * available.</p>
+   *
+   * <p>The connection will be a {@link ConnectionTracker}, which may be unwrapped via {@link Connection#unwrap(java.lang.Class)}.
+   * The connection tracking is used to close/free all objects before returning the connection to the pool.</p>
    *
    * @param  maxConnections  The maximum number of connections expected to be used by the current thread.
    *                         This should normally be one to avoid potential deadlock.
-   *                         <p>
-   *                         The connection will continue to be considered used by the allocating thread until
+   *
+   *                         <p>The connection will continue to be considered used by the allocating thread until
    *                         released (via {@link Connection#close()}, even if the connection is shared by another
-   *                         thread.
-   *                         </p>
+   *                         thread.</p>
    *
    * @return  The read/write connection to the database
    *
@@ -203,17 +195,14 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
    * Gets a connection to the database with a transaction level of
    * {@link Connections#DEFAULT_TRANSACTION_ISOLATION},
    * warning when a connection is already used by this thread.
-   * <p>
-   * The connection will be in auto-commit mode, as configured by {@link #resetConnection(java.sql.Connection)}
-   * </p>
-   * <p>
-   * If all the connections in the pool are busy and the pool is at capacity, waits until a connection becomes
-   * available.
-   * </p>
-   * <p>
-   * The connection will be a {@link ConnectionTracker}, which may be unwrapped via {@link Connection#unwrap(java.lang.Class)}.
-   * The connection tracking is used to close/free all objects before returning the connection to the pool.
-   * </p>
+   *
+   * <p>The connection will be in auto-commit mode, as configured by {@link #resetConnection(java.sql.Connection)}</p>
+   *
+   * <p>If all the connections in the pool are busy and the pool is at capacity, waits until a connection becomes
+   * available.</p>
+   *
+   * <p>The connection will be a {@link ConnectionTracker}, which may be unwrapped via {@link Connection#unwrap(java.lang.Class)}.
+   * The connection tracking is used to close/free all objects before returning the connection to the pool.</p>
    *
    * @param  readOnly  The {@link Connection#setReadOnly(boolean) read-only flag}
    *
@@ -234,17 +223,14 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
   /**
    * Gets a connection to the database,
    * warning when a connection is already used by this thread.
-   * <p>
-   * The connection will be in auto-commit mode, as configured by {@link #resetConnection(java.sql.Connection)}
-   * </p>
-   * <p>
-   * If all the connections in the pool are busy and the pool is at capacity, waits until a connection becomes
-   * available.
-   * </p>
-   * <p>
-   * The connection will be a {@link ConnectionTracker}, which may be unwrapped via {@link Connection#unwrap(java.lang.Class)}.
-   * The connection tracking is used to close/free all objects before returning the connection to the pool.
-   * </p>
+   *
+   * <p>The connection will be in auto-commit mode, as configured by {@link #resetConnection(java.sql.Connection)}</p>
+   *
+   * <p>If all the connections in the pool are busy and the pool is at capacity, waits until a connection becomes
+   * available.</p>
+   *
+   * <p>The connection will be a {@link ConnectionTracker}, which may be unwrapped via {@link Connection#unwrap(java.lang.Class)}.
+   * The connection tracking is used to close/free all objects before returning the connection to the pool.</p>
    *
    * @param  isolationLevel  The {@link Connection#setTransactionIsolation(int) transaction isolation level}
    *
@@ -266,17 +252,14 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
 
   /**
    * Gets a connection to the database.
-   * <p>
-   * The connection will be in auto-commit mode, as configured by {@link #resetConnection(java.sql.Connection)}
-   * </p>
-   * <p>
-   * If all the connections in the pool are busy and the pool is at capacity, waits until a connection becomes
-   * available.
-   * </p>
-   * <p>
-   * The connection will be a {@link ConnectionTracker}, which may be unwrapped via {@link Connection#unwrap(java.lang.Class)}.
-   * The connection tracking is used to close/free all objects before returning the connection to the pool.
-   * </p>
+   *
+   * <p>The connection will be in auto-commit mode, as configured by {@link #resetConnection(java.sql.Connection)}</p>
+   *
+   * <p>If all the connections in the pool are busy and the pool is at capacity, waits until a connection becomes
+   * available.</p>
+   *
+   * <p>The connection will be a {@link ConnectionTracker}, which may be unwrapped via {@link Connection#unwrap(java.lang.Class)}.
+   * The connection tracking is used to close/free all objects before returning the connection to the pool.</p>
    *
    * @param  isolationLevel  The {@link Connection#setTransactionIsolation(int) transaction isolation level}
    *
@@ -284,11 +267,10 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
    *
    * @param  maxConnections  The maximum number of connections expected to be used by the current thread.
    *                         This should normally be one to avoid potential deadlock.
-   *                         <p>
-   *                         The connection will continue to be considered used by the allocating thread until
+   *
+   *                         <p>The connection will continue to be considered used by the allocating thread until
    *                         released (via {@link Connection#close()}, even if the connection is shared by another
-   *                         thread.
-   *                         </p>
+   *                         thread.</p>
    *
    * @return  The connection to the database
    *
