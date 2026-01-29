@@ -132,7 +132,7 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
    * {@link Connections#DEFAULT_TRANSACTION_ISOLATION},
    * warning when a connection is already used by this thread.
    *
-   * <p>The connection will be in auto-commit mode, as configured by {@link #resetConnection(java.sql.Connection)}</p>
+   * <p>The connection will be in auto-commit mode, as configured by {@link AOConnectionPool#resetConnection(java.sql.Connection)}</p>
    *
    * <p>If all the connections in the pool are busy and the pool is at capacity, waits until a connection becomes
    * available.</p>
@@ -144,7 +144,7 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
    *
    * @throws  SQLException  when an error occurs, or when a thread attempts to allocate more than half the pool
    *
-   * @see  #getConnection(int, boolean, int)
+   * @see  AOConnectionPool#getConnection(int, boolean, int)
    * @see  Connection#close()
    */
   // Note: Matches AOPool.getConnection()
@@ -160,7 +160,7 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
    * Gets a read/write connection to the database with a transaction level of
    * {@link Connections#DEFAULT_TRANSACTION_ISOLATION}.
    *
-   * <p>The connection will be in auto-commit mode, as configured by {@link #resetConnection(java.sql.Connection)}</p>
+   * <p>The connection will be in auto-commit mode, as configured by {@link AOConnectionPool#resetConnection(java.sql.Connection)}</p>
    *
    * <p>If all the connections in the pool are busy and the pool is at capacity, waits until a connection becomes
    * available.</p>
@@ -179,7 +179,7 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
    *
    * @throws  SQLException  when an error occurs, or when a thread attempts to allocate more than half the pool
    *
-   * @see  #getConnection(int, boolean, int)
+   * @see  AOConnectionPool#getConnection(int, boolean, int)
    * @see  Connection#close()
    */
   // Note: Matches AOPool.getConnection(int)
@@ -196,7 +196,7 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
    * {@link Connections#DEFAULT_TRANSACTION_ISOLATION},
    * warning when a connection is already used by this thread.
    *
-   * <p>The connection will be in auto-commit mode, as configured by {@link #resetConnection(java.sql.Connection)}</p>
+   * <p>The connection will be in auto-commit mode, as configured by {@link AOConnectionPool#resetConnection(java.sql.Connection)}</p>
    *
    * <p>If all the connections in the pool are busy and the pool is at capacity, waits until a connection becomes
    * available.</p>
@@ -210,7 +210,7 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
    *
    * @throws  SQLException  when an error occurs, or when a thread attempts to allocate more than half the pool
    *
-   * @see  #getConnection(int, boolean, int)
+   * @see  AOConnectionPool#getConnection(int, boolean, int)
    * @see  Connection#close()
    */
   // Note:      Is AOConnectionPool.getConnection(boolean)
@@ -224,7 +224,7 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
    * Gets a connection to the database,
    * warning when a connection is already used by this thread.
    *
-   * <p>The connection will be in auto-commit mode, as configured by {@link #resetConnection(java.sql.Connection)}</p>
+   * <p>The connection will be in auto-commit mode, as configured by {@link AOConnectionPool#resetConnection(java.sql.Connection)}</p>
    *
    * <p>If all the connections in the pool are busy and the pool is at capacity, waits until a connection becomes
    * available.</p>
@@ -240,7 +240,7 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
    *
    * @throws  SQLException  when an error occurs, or when a thread attempts to allocate more than half the pool
    *
-   * @see  #getConnection(int, boolean, int)
+   * @see  AOConnectionPool#getConnection(int, boolean, int)
    * @see  Connection#close()
    */
   // Note:      Is AOConnectionPool.getConnection(int, boolean)
@@ -253,7 +253,7 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
   /**
    * Gets a connection to the database.
    *
-   * <p>The connection will be in auto-commit mode, as configured by {@link #resetConnection(java.sql.Connection)}</p>
+   * <p>The connection will be in auto-commit mode, as configured by {@link AOConnectionPool#resetConnection(java.sql.Connection)}</p>
    *
    * <p>If all the connections in the pool are busy and the pool is at capacity, waits until a connection becomes
    * available.</p>
@@ -474,9 +474,9 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
   }
 
   /**
-   * Default implementation of {@link #logConnection(java.sql.Connection)}.
+   * Default implementation of {@link AOConnectionPool#logConnection(java.sql.Connection)}.
    *
-   * @see  #logConnection(java.sql.Connection)
+   * @see  AOConnectionPool#logConnection(java.sql.Connection)
    */
   public static void defaultLogConnection(Connection conn, Logger logger) throws SQLException {
     SQLWarning warning = conn.getWarnings();
@@ -488,7 +488,7 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
   /**
    * {@inheritDoc}
    *
-   * @see  #defaultLogConnection(java.sql.Connection, java.util.logging.Logger)
+   * @see  AOConnectionPool#defaultLogConnection(java.sql.Connection, java.util.logging.Logger)
    */
   @Override
   protected void logConnection(Connection conn) throws SQLException {
@@ -496,16 +496,16 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
   }
 
   /**
-   * Default implementation of {@link #resetConnection(java.sql.Connection)}.
+   * Default implementation of {@link AOConnectionPool#resetConnection(java.sql.Connection)}.
    * <ol>
    * <li>{@linkplain Connection#clearWarnings() Warnings are cleared}</li>
    * <li>Any {@linkplain Connection#getAutoCommit() transaction in-progress} is {@linkplain Connection#rollback() rolled-back}</li>
    * <li>Auto-commit is enabled</li>
-   * <li>Read-only state is set to {@link #IDLE_READ_ONLY}</li>
+   * <li>Read-only state is set to {@link AOConnectionPool#IDLE_READ_ONLY}</li>
    * <li>Transaction isolation level set to {@link Connections#DEFAULT_TRANSACTION_ISOLATION}</li>
    * </ol>
    *
-   * @see  #resetConnection(java.sql.Connection)
+   * @see  AOConnectionPool#resetConnection(java.sql.Connection)
    */
   public static void defaultResetConnection(Connection conn) throws SQLException {
     if (Thread.currentThread().isInterrupted()) {
@@ -540,7 +540,7 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
   /**
    * {@inheritDoc}
    *
-   * @see  #defaultResetConnection(java.sql.Connection)
+   * @see  AOConnectionPool#defaultResetConnection(java.sql.Connection)
    */
   @Override
   protected void resetConnection(Connection conn) throws SQLException {
