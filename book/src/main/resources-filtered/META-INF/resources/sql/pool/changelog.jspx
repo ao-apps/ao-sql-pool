@@ -37,9 +37,9 @@ along with ao-sql-pool.  If not, see <https://www.gnu.org/licenses/>.
     shortTitle="Changelog"
     tocLevels="1"
     datePublished="2020-11-02T23:14:50-06:00"
-    dateModified="2025-07-02T23:05:45Z"
+    dateModified="2026-02-02T15:45:07Z"
   >
-    <c:set var="latestRelease" value="2.0.1" />
+    <c:set var="latestRelease" value="2.1.0" />
     <c:if test="${
       fn:endsWith('@{project.version}', '-SNAPSHOT')
       and !fn:endsWith('@{project.version}', '-POST-SNAPSHOT')
@@ -51,12 +51,21 @@ along with ao-sql-pool.  If not, see <https://www.gnu.org/licenses/>.
         groupId="@{project.groupId}"
         artifactId="@{documented.artifactId}"
         scmUrl="@{project.scm.url}"
-      >
-        <ul>
-          <li>Minimum Java version changed from 1.8 to 11.</li>
-        </ul>
-      </changelog:release>
+      />
     </c:if>
+
+    <changelog:release
+      projectName="@{documented.name}"
+      version="2.1.0"
+      datePublished="2026-02-02T15:45:07Z"
+      groupId="@{project.groupId}"
+      artifactId="@{documented.artifactId}"
+      scmUrl="@{project.scm.url}"
+    >
+      <ul>
+        <li>Minimum Java version changed from 1.8 to 11.</li>
+      </ul>
+    </changelog:release>
 
     <changelog:release
       projectName="@{documented.name}"
