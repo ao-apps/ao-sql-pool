@@ -1,6 +1,6 @@
 /*
  * ao-sql-pool - Legacy AO JDBC connection pool.
- * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2015, 2016, 2018, 2019, 2020, 2021, 2022, 2024  AO Industries, Inc.
+ * Copyright (C) 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2015, 2016, 2018, 2019, 2020, 2021, 2022, 2024, 2026  AO Industries, Inc.
  *     support@aoindustries.com
  *     7262 Bull Pen Cir
  *     Mobile, AL 36695
@@ -481,7 +481,7 @@ public class AOConnectionPool extends AOPool<Connection, SQLException, SQLExcept
   public static void defaultLogConnection(Connection conn, Logger logger) throws SQLException {
     SQLWarning warning = conn.getWarnings();
     if (warning != null) {
-      logger.log(Level.WARNING, null, warning);
+      logger.log(Level.WARNING, "TODO: message here", warning);
     }
   }
 
